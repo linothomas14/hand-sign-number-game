@@ -23,6 +23,7 @@ class BasicMode(tk.Frame):
                                        text=f"Jumlah Skor : {self.answered}")
         self.answered_label.pack()
 
+        # TODO: Utils dideclare dua kali
         self.utils = Utils
 
         self.highestScore = self.utils.readHighestScore()
@@ -49,11 +50,13 @@ class BasicMode(tk.Frame):
         cap.set(3, wCam)
         cap.set(4, hCam)
         x = 40
+
         detector = htm.handDetector(detectionCon=0.75)
+        # Ini juga
         utils = Utils(detector=detector)
 
         fingers_list = utils.fingers_list
-
+        self.answered = 0
         number = str(randint(1, 10))
 
         self.activeCam = False if self.activeCam is True else True
