@@ -1,8 +1,6 @@
-from tkinter import *
-from tkinter import messagebox
 import json
 
-import helper.HandTrackingModule as htm
+import hand_number_game.helper.HandTrackingModule as htm
 
 
 class Utils:
@@ -73,7 +71,6 @@ class Utils:
                             self.tip_ids[id] - 2][2]:
                         fingers[id] = 1
         return fingers
-
 
     def readHighestScore():
         f = open('db.json')
