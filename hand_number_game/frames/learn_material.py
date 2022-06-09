@@ -6,7 +6,7 @@ from hand_number_game.helper.config import LARGE_FONT
 class LearnMaterial(tk.Frame):
 
     # Importing Photos
-    dir = "assets/"
+    dir = "assets/hand-images/"
     image_list = []
     text_list = []
     for i in range(10):
