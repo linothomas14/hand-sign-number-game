@@ -8,8 +8,6 @@ from playsound import playsound
 
 
 class BasicMode(tk.Frame):
-    print('masuk')
-
     def __init__(self, parent, controller):
         self.MainMenu = None
         self.activeCam = False
@@ -61,7 +59,6 @@ class BasicMode(tk.Frame):
 
         self.activeCam = False if self.activeCam is True else True
         while self.activeCam:
-            print("helo")
             success, img = cap.read()
             img = cv2.flip(img, 1)
             img, handsType = detector.findHands(img)
@@ -76,7 +73,9 @@ class BasicMode(tk.Frame):
             if x >= 600:
                 x = 70
                 number = str(randint(1, 10))
+                num = str(randint(1, 10))
                 playsound('./assets/click.wav', block=False)
+                playsound("./assets/sounds/"+self.utils.getSound(num), block=False)
                 self.answered += 1
                 if self.answered > self.highestScore:
                     # self.highestScore = answered
@@ -86,7 +85,6 @@ class BasicMode(tk.Frame):
 
             # Green-bar
             cv2.rectangle(img, (40, 400), (x, 430), (0, 255, 0), cv2.FILLED)
-            # print(x)
 
             cv2.putText(img, number, (310, 70), cv2.FONT_HERSHEY_PLAIN, 4,
                         (0, 255, 0), 5)
