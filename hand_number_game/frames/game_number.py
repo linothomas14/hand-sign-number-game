@@ -1,4 +1,5 @@
 from hand_number_game.frames.learn_material import LearnMaterial
+from hand_number_game.frames.tutorial import Tutorial
 from hand_number_game.frames.basic_mode import BasicMode
 from hand_number_game.frames.main_menu import MainMenu
 import tkinter as tk
@@ -10,6 +11,7 @@ class NumberGame(tk.Tk):
 
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)
+        self.title('Hand Sign Number Game')
         self.geometry("1000x700")
         container.pack(pady=50, side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
@@ -19,7 +21,7 @@ class NumberGame(tk.Tk):
         self.answered = 0
         self.frames = {}
 
-        for F in (MainMenu, BasicMode, LearnMaterial):
+        for F in (MainMenu, BasicMode, LearnMaterial, Tutorial):
 
             frame = F(container, self)
             frame.MainMenu = MainMenu

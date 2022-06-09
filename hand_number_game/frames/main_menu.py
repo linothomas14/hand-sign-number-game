@@ -2,7 +2,7 @@ import tkinter as tk
 from hand_number_game.helper.config import LARGE_FONT
 from hand_number_game.frames.basic_mode import BasicMode
 from hand_number_game.frames.learn_material import LearnMaterial
-
+from hand_number_game.frames.tutorial import Tutorial
 
 class MainMenu(tk.Frame):
 
@@ -28,7 +28,7 @@ class MainMenu(tk.Frame):
         tutorialButton = tk.Button(
             self,
             text="Cara Bermain",
-            command=lambda: controller.show_frame(LearnMaterial))
+            command=lambda: controller.show_frame(Tutorial))
         tutorialButton.pack(ipadx=10, ipady=5, pady=10)
 
     def activatedCam(self, controller):
