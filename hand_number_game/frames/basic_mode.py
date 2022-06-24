@@ -1,4 +1,5 @@
 import tkinter as tk
+from hand_number_game.helper.config import REGULAR_FONT
 from hand_number_game.helper.utils import Utils
 import hand_number_game.helper.HandTrackingModule as htm
 import cv2
@@ -18,7 +19,7 @@ class BasicMode(tk.Frame):
         self.imgLabel.pack(fill="both", expand="yes")
 
         self.answered_label = tk.Label(self,
-                                       text=f"Jumlah Skor : {self.answered}")
+                                       text=f"Jumlah Skor : {self.answered}", font=REGULAR_FONT)
         self.answered_label.pack()
 
         # TODO: Utils dideclare dua kali
@@ -27,15 +28,15 @@ class BasicMode(tk.Frame):
         self.highestScore = self.utils.readHighestScore()
 
         self.highestScore_label = tk.Label(
-            self, text=f"Skor Tertinggi : {self.highestScore}")
+            self, text=f"Skor Tertinggi : {self.highestScore}", font=REGULAR_FONT)
         self.highestScore_label.pack()
 
-        play = tk.Button(self, text="Play", command=self.main)
-        play.pack()
+        play = tk.Button(self, text="Play", font=REGULAR_FONT, command=self.main)
+        play.pack(pady=10)
 
         button1 = tk.Button(
             self,
-            text="Back to Home",
+            text="Back to Home", font=REGULAR_FONT,
             command=lambda: controller.show_frame(self.MainMenu))
         button1.pack()
 
@@ -50,7 +51,7 @@ class BasicMode(tk.Frame):
         x = 40
 
         detector = htm.handDetector(detectionCon=0.75)
-        # Ini juga
+
         utils = Utils(detector=detector)
 
         fingers_list = utils.fingers_list
@@ -86,11 +87,11 @@ class BasicMode(tk.Frame):
             # Green-bar
             cv2.rectangle(img, (40, 400), (x, 430), (0, 255, 0), cv2.FILLED)
 
-            cv2.putText(img, number, (310, 70), cv2.FONT_HERSHEY_PLAIN, 4,
+            cv2.putText(img, number, (300, 70), cv2.FONT_HERSHEY_PLAIN, 4,
                         (0, 255, 0), 5)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             img = ImageTk.PhotoImage(image=Image.fromarray(img))
 
             self.imgLabel["image"] = img
-            self.answered_label['text'] = f"Correct answers: {self.answered}"
+            self.answered_label['text'] = f"Jumlah Skor : {self.answered}"
             self.update()

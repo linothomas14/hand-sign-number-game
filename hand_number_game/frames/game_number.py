@@ -13,6 +13,7 @@ class NumberGame(tk.Tk):
         container = tk.Frame(self)
         self.title("Hand Sign Number Game")
         self.geometry("1000x700")
+        self.minsize(1000, 700)
         container.pack(pady=50, side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)

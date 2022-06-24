@@ -1,5 +1,6 @@
 ## Styling
-LARGE_FONT = ("Ubuntu", 30)
+LARGE_FONT = ("Ubuntu", 20)
+REGULAR_FONT = ("Ubuntu", 12)
 BUTTON_CONF_1 = {"height": 1, "width": 25, "bg": "#0d0d0d", "fg": "#ffffff"}
 BUTTON_SIZE_VIEW = {"height": 1, "width": 20}
 PAD_PACK_OPTIONS = {"padx": 12, "pady": 12}
