@@ -1,4 +1,5 @@
 import tkinter as tk
+from turtle import bgcolor
 from hand_number_game.helper.config import REGULAR_FONT
 from hand_number_game.helper.utils import Utils
 import hand_number_game.helper.HandTrackingModule as htm
@@ -25,26 +26,26 @@ class BasicMode(tk.Frame):
         # TODO: Utils dideclare dua kali
         self.utils = Utils
 
-        self.highestScore = self.utils.readHighestScore()
+        self.highestScore = self.utils.readHighestScore("basic")
 
         self.highestScore_label = tk.Label(
             self, text=f"Skor Tertinggi : {self.highestScore}", font=REGULAR_FONT)
         self.highestScore_label.pack()
 
-        play = tk.Button(self, text="Play", font=REGULAR_FONT, command=self.main)
-        play.pack(pady=10)
+        play = tk.Button(self, text="Play", 
+                         bg="green",
+                         fg="white",
+                         font=REGULAR_FONT, command=self.main)
+        play.pack(pady=5, ipadx=20)
 
-        button1 = tk.Button(
+        back_button = tk.Button(
             self,
             text="Back to Home", font=REGULAR_FONT,
             command=lambda: controller.show_frame(self.MainMenu))
-        button1.pack()
-
-    def mainMenu(self):
-        self.activeCam = False
+        back_button.pack()
 
     def main(self):
-        wCam, hCam = 800, 380
+        wCam, hCam = 640, 480
         cap = cv2.VideoCapture(0)
         cap.set(3, wCam)
         cap.set(4, hCam)
@@ -72,7 +73,7 @@ class BasicMode(tk.Frame):
                 if fingers_list[i] == fingers and i == number and x < 600:
                     x += 20
             if x >= 600:
-                x = 70
+                x = 40
                 number = str(randint(1, 10))
                 num = str(randint(1, 10))
                 playsound('./assets/click.wav', block=False)
@@ -82,7 +83,7 @@ class BasicMode(tk.Frame):
                     # self.highestScore = answered
                     self.highestScore_label[
                         'text'] = f"Skor Tertinggi : {self.answered}"
-                    self.utils.updateHighestScore(self.answered)
+                    self.utils.updateHighestScore(self.answered, "basic")
 
             # Green-bar
             cv2.rectangle(img, (40, 400), (x, 430), (0, 255, 0), cv2.FILLED)

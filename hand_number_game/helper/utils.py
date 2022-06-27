@@ -72,16 +72,22 @@ class Utils:
                         fingers[id] = 1
         return fingers
 
-    def readHighestScore():
+    def readHighestScore(mode):
         f = open('db.json')
         data = json.load(f)
-        return data['highest']
+        if mode == "basic":
+            return data['basic_score']
+        else :
+            return data['float_score']
 
-    def updateHighestScore(newScore):
+    def updateHighestScore(newScore, mode):
         with open('db.json') as f:
             data = json.load(f)
 
-            data['highest'] = newScore
+            if mode == "basic":
+                data['basic_score'] = newScore
+            else :
+                data['float_score'] = newScore
 
         with open('db.json', 'w') as f:
             json.dump(data, f)

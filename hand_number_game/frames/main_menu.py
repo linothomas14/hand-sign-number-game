@@ -13,12 +13,12 @@ class MainMenu(tk.Frame):
         label.pack(pady=10, padx=10)
 
         startButton = tk.Button(
-            self, text="Mulai Bermain", font=REGULAR_FONT, command=lambda: controller.show_frame(BasicMode)
+            self, text="Main Mode Basic", font=REGULAR_FONT, command=lambda: controller.show_frame(BasicMode)
         )
         startButton.pack(ipadx=5, ipady=5, pady=10)
 
         float_mode_button = tk.Button(
-            self, text="Mode Float", font=REGULAR_FONT, command=lambda: controller.show_frame(FloatMode)
+            self, text="Main Mode Float", font=REGULAR_FONT, command=lambda: controller.show_frame(FloatMode)
         )
         float_mode_button.pack(ipadx=5, ipady=5, pady=10)
 

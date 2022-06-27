@@ -1,6 +1,5 @@
 import tkinter as tk
-import time
-from hand_number_game.helper.config import REGULAR_FONT
+from hand_number_game.helper.config import REGULAR_FONT, SMALL_FONT
 from hand_number_game.helper.utils import Utils
 import hand_number_game.helper.HandTrackingModule as htm
 import cv2
@@ -25,36 +24,47 @@ class FloatMode(tk.Frame):
         # TODO: Utils dideclare dua kali
         self.utils = Utils
 
-        self.highestScore = self.utils.readHighestScore()
+        self.highestScore = self.utils.readHighestScore("float")
 
         self.highestScore_label = tk.Label(
             self, text=f"Skor Tertinggi : {self.highestScore}", font=REGULAR_FONT
         )
         self.highestScore_label.pack()
 
-        play = tk.Button(self, text="Play", font=REGULAR_FONT, command=self.main)
-        play.pack()
+        play = tk.Button(self, text="Play", 
+                         bg="green",
+                         fg="white",
+                         font=REGULAR_FONT, command=self.main)
+        play.pack(pady=5, ipadx=20)
 
-        button1 = tk.Button(
+        back_button = tk.Button(
             self,
             text="Back to Home", font=REGULAR_FONT,
             command=lambda: controller.show_frame(self.MainMenu))
-        button1.pack()
+        back_button.pack()
 
-    # Buat pop up window, tapi belum work
-    def pop_up(self, parent, controller):
-        pop = tk.Toplevel(parent)
-        pop.geometry("250x150")
+    def pop_up(self):
 
-        pop_label = tk.Label(pop,text="Kamu kurang cepat, coba lagi")
+        pop = tk.Toplevel()
+        width = 250 # width for the Tk root
+        height = 100 # height for the Tk root
+        width_screen = pop.winfo_screenwidth() # width of the screen
+        height_screen = pop.winfo_screenheight() # height of the screen
+
+        x = (width_screen/2) - (width/2)
+        y = ((height_screen/2) - 30) - (height/2)
+
+        # set the dimensions of the screen 
+        pop.geometry('%dx%d+%d+%d' % (width, height, x, y))
+
+        pop_label = tk.Label(pop,text="Kamu kurang cepat, coba lagi",font=REGULAR_FONT )
         pop_label.pack(pady=10)
 
-        back_button = tk.Button(pop, text="Kembali", command=lambda: controller.show_frame(self.MainMenu))
+        back_button = tk.Button(pop, text="Kembali",font=REGULAR_FONT, command=lambda:pop.destroy())
         back_button.pack()
  
     def main(self):
-        # pTime = 0
-        wCam, hCam = 800, 380
+        wCam, hCam = 640, 480
         cap = cv2.VideoCapture(0)
         cap.set(3, wCam)
         cap.set(4, hCam)
@@ -70,7 +80,7 @@ class FloatMode(tk.Frame):
 
         
         self.activeCam = False if self.activeCam is True else True
-        while True:
+        while self.activeCam:
             # To capture frame from camera device and process it with HandTrackingModule
             success, img = cap.read()
             img = cv2.flip(img, 1)
@@ -87,23 +97,27 @@ class FloatMode(tk.Frame):
             if x >= 600:
                 x = 40
                 number = str(randint(1, 10))
-                self.answered += 1
+                num = str(randint(1, 10))
+                playsound('./assets/click.wav', block=False)
+                playsound("./assets/sounds/"+self.utils.getSound(num), block=False)
                 ynum = 500
                 xnum = randint(50, 400)
+                self.answered += 1
+                if self.answered > self.highestScore:
+                    # self.highestScore = answered
+                    self.highestScore_label[
+                        'text'] = f"Skor Tertinggi : {self.answered}"
+                    self.utils.updateHighestScore(self.answered, "float")
 
             # If number pass over the camera
             if ynum <= 0:
                 x = 40
                 number = str(randint(1, 10))
-                print("Kamu kalah")
-                # pop = tk.Toplevel(self)
-                # pop.geometry("250x150")
+                self.activeCam = False
+                self.pop_up()
+                return
+                
 
-                # pop_label = tk.Label(pop,text="Kamu kurang cepat, coba lagi")
-                # pop_label.pack(pady=10)
-
-                # back_button = tk.Button(pop, text="Kembali")
-                # back_button.pack()
                 ynum = 500
                 xnum = randint(50, 400)
 
@@ -120,7 +134,8 @@ class FloatMode(tk.Frame):
 
             # Return from BGR to RGB
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img = ImageTk.PhotoImage(Image.fromarray(img))
+            img = ImageTk.PhotoImage(image=Image.fromarray(img))
+            
             self.imgLabel["image"] = img
             self.answered_label["text"] = f"Jumlah Skor : {self.answered}"
             self.update()
