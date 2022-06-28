@@ -51,5 +51,6 @@ class NumberGame(tk.Tk):
 
         self.frames[FloatMode].answered = 0
         self.frames[FloatMode].activeCam =False
+        self.frames[FloatMode].lifes = 3
         frame = self.frames[cont]
         frame.tkraise()

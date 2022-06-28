@@ -12,13 +12,13 @@ class FloatMode(tk.Frame):
     def __init__(self, parent, controller):
         self.MainMenu = None
         self.activeCam = False
-        self.answered = 0
+
         tk.Frame.__init__(self, parent)
 
         self.imgLabel = tk.Label(self)
         self.imgLabel.pack(fill="both", expand="yes")
 
-        self.answered_label = tk.Label(self, text=f"Jumlah Skor : {self.answered}", font=REGULAR_FONT)
+        self.answered_label = tk.Label(self, text=f"Jumlah Skor : 0", font=REGULAR_FONT)
         self.answered_label.pack()
 
         # TODO: Utils dideclare dua kali
@@ -69,6 +69,8 @@ class FloatMode(tk.Frame):
         cap.set(3, wCam)
         cap.set(4, hCam)
         x = 40
+        self.answered = 0
+        self.lifes = 3
 
         detector = htm.handDetector(detectionCon=0.75)
         utils = Utils(detector=detector)
@@ -98,7 +100,7 @@ class FloatMode(tk.Frame):
                 x = 40
                 number = str(randint(1, 10))
                 num = str(randint(1, 10))
-                playsound('./assets/click.wav', block=False)
+                playsound('./assets/sounds/click.wav', block=False)
                 playsound("./assets/sounds/"+self.utils.getSound(num), block=False)
                 ynum = 500
                 xnum = randint(50, 400)
@@ -112,17 +114,17 @@ class FloatMode(tk.Frame):
             # If number pass over the camera
             if ynum <= 0:
                 x = 40
+                self.lifes-=1
                 number = str(randint(1, 10))
-                self.activeCam = False
-                self.pop_up()
-                return
                 
-
                 ynum = 500
                 xnum = randint(50, 400)
 
-
-
+                if self.lifes < 0:
+                    self.activeCam = False
+                    self.pop_up()
+                    return
+            
             # Green-bar
             cv2.rectangle(img, (40, 400), (600, 450), (0, 255, 0), 3)
             cv2.rectangle(img, (40, 400), (x, 450), (0, 255, 0), cv2.FILLED)
@@ -131,6 +133,11 @@ class FloatMode(tk.Frame):
             cv2.putText(
                 img, number, (xnum, ynum), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 0), 5
             )
+
+            # Remaining lifes 
+            cv2.putText(
+            img, f"Nyawa : {self.lifes}",(20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2
+        )
 
             # Return from BGR to RGB
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)

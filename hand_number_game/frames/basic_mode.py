@@ -66,8 +66,6 @@ class BasicMode(tk.Frame):
             img, handsType = detector.findHands(img)
             fingers = utils.get_shown_fingers(img=img, hands_type=handsType)
 
-            cv2.rectangle(img, (40, 400), (600, 430), (0, 255, 0), 3)
-
             # To check match finger with number displayed
             for i in fingers_list:
                 if fingers_list[i] == fingers and i == number and x < 600:
@@ -76,7 +74,7 @@ class BasicMode(tk.Frame):
                 x = 40
                 number = str(randint(1, 10))
                 num = str(randint(1, 10))
-                playsound('./assets/click.wav', block=False)
+                playsound('./assets/sounds/click.wav', block=False)
                 playsound("./assets/sounds/"+self.utils.getSound(num), block=False)
                 self.answered += 1
                 if self.answered > self.highestScore:
@@ -86,6 +84,7 @@ class BasicMode(tk.Frame):
                     self.utils.updateHighestScore(self.answered, "basic")
 
             # Green-bar
+            cv2.rectangle(img, (40, 400), (600, 430), (0, 255, 0), 3)
             cv2.rectangle(img, (40, 400), (x, 430), (0, 255, 0), cv2.FILLED)
 
             cv2.putText(img, number, (300, 70), cv2.FONT_HERSHEY_PLAIN, 4,
