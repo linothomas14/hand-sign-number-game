@@ -1,3 +1,4 @@
+import threading
 import tkinter as tk
 from hand_number_game.helper.config import REGULAR_FONT, SMALL_FONT
 from hand_number_game.helper.utils import Utils
@@ -100,8 +101,10 @@ class FloatMode(tk.Frame):
                 x = 40
                 number = str(randint(1, 10))
                 num = str(randint(1, 10))
-                playsound('./assets/sounds/click.wav', block=False)
-                playsound("./assets/sounds/"+self.utils.getSound(num), block=False)
+                threading.Thread(target=playsound, args=('./assets/sounds/click.wav',), daemon=True).start()
+                threading.Thread(target=playsound, args=('./assets/sounds/'+self.utils.getSound(num),), daemon=True).start()
+                # playsound('./assets/sounds/click.wav', block=False)
+                # playsound("./assets/sounds/"+self.utils.getSound(num), block=False)
                 ynum = 500
                 xnum = randint(50, 400)
                 self.answered += 1
