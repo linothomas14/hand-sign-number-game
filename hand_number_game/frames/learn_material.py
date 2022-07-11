@@ -23,17 +23,17 @@ class LearnMaterial(tk.Frame):
         self.label = tk.Label(self, text="Gambar Angka", font=LARGE_FONT)
         self.label.pack(pady=10, padx=10)
 
-        self.imgWrapper = tk.Label(self,font=REGULAR_FONT, compound=tk.TOP)
+        self.imgWrapper = tk.Label(self, font=REGULAR_FONT, compound=tk.TOP)
         self.imgWrapper.pack()
 
         self.buttonWrapper = tk.Frame(self)
         self.buttonWrapper.pack(pady=15)
 
         tk.Button(self.buttonWrapper,
-                  text='Previous',font=REGULAR_FONT,
+                  text='Previous', font=REGULAR_FONT,
                   command=lambda: self.move(-1)).grid(padx=5, row=0, column=0)
         tk.Button(self.buttonWrapper,
-                  text='Next',font=REGULAR_FONT,
+                  text='Next', font=REGULAR_FONT,
                   command=lambda: self.move(+1)).grid(padx=5,
                                                       ipadx=15,
                                                       row=0,

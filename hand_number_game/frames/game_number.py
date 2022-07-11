@@ -14,7 +14,7 @@ class NumberGame(tk.Tk):
         self.title("Hand Sign Number Game")
         width = 1000 # width for the Tk root
         height = 700 # height for the Tk root
-
+        
         # get screen width and height
         width_screen = self.winfo_screenwidth() 
         height_screen = self.winfo_screenheight() 

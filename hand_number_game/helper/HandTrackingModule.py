@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 
 
-class handDetector():
+class HandTrackingModule():
 
     def __init__(self,
                  mode=False,
@@ -15,7 +15,6 @@ class handDetector():
         self.detectionCon = detectionCon
         self.modelComplex = modelComplexity
         self.trackCon = trackCon
-        # self.handType = "Left"
         self.handsType = []
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(self.mode, self.maxHands,

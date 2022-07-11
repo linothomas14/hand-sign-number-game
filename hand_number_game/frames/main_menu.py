@@ -9,8 +9,9 @@ from hand_number_game.frames.float_mode import FloatMode
 class MainMenu(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+
         label = tk.Label(self, text="Permainan Pengenalan Angka", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
+        label.pack(ipady=10, padx=10)
 
         startButton = tk.Button(
             self, text="Main Mode Basic", font=REGULAR_FONT, command=lambda: controller.show_frame(BasicMode)

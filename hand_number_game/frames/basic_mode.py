@@ -1,6 +1,7 @@
 import threading
 import tkinter as tk
 from hand_number_game.helper.config import REGULAR_FONT
+from hand_number_game.helper.media import Media
 from hand_number_game.helper.utils import Utils
 import hand_number_game.helper.HandTrackingModule as htm
 import cv2
@@ -23,16 +24,15 @@ class BasicMode(tk.Frame):
                                        text=f"Jumlah Skor : {self.answered}", font=REGULAR_FONT)
         self.answered_label.pack()
 
-        # TODO: Utils dideclare dua kali
-        self.utils = Utils
+        self.media = Media
 
-        self.highestScore = self.utils.readHighestScore("basic")
+        self.highestScore = self.media.readHighestScore("basic")
 
         self.highestScore_label = tk.Label(
             self, text=f"Skor Tertinggi : {self.highestScore}", font=REGULAR_FONT)
         self.highestScore_label.pack()
 
-        play = tk.Button(self, text="Play", 
+        play = tk.Button(self, text="Play",
                          bg="green",
                          fg="white",
                          font=REGULAR_FONT, command=self.main)
@@ -51,7 +51,7 @@ class BasicMode(tk.Frame):
         cap.set(4, hCam)
         x = 40
 
-        detector = htm.handDetector(detectionCon=0.75)
+        detector = htm.HandTrackingModule(detectionCon=0.75)
 
         utils = Utils(detector=detector)
 
@@ -69,21 +69,22 @@ class BasicMode(tk.Frame):
             # To check match finger with number displayed
             for i in fingers_list:
                 if fingers_list[i] == fingers and i == number and x < 600:
-                    x += 20
+                    x += 35
             if x >= 600:
                 x = 40
                 number = str(randint(1, 10))
                 num = str(randint(1, 10))
-                threading.Thread(target=playsound, args=('./assets/sounds/click.wav',), daemon=True).start()
-                threading.Thread(target=playsound, args=('./assets/sounds/'+self.utils.getSound(num),), daemon=True).start()
+                threading.Thread(target=playsound, args=(
+                    './assets/sounds/click.wav',), daemon=True).start()
+                threading.Thread(target=playsound, args=(
+                    './assets/sounds/'+self.media.getSound(num),), daemon=True).start()
                 # playsound('./assets/sounds/click.wav', block=False)
-                # playsound("./assets/sounds/"+self.utils.getSound(num), block=False)
+                # playsound("./assets/sounds/"+self.media.getSound(num), block=False)
                 self.answered += 1
                 if self.answered > self.highestScore:
-                    # self.highestScore = answered
                     self.highestScore_label[
                         'text'] = f"Skor Tertinggi : {self.answered}"
-                    self.utils.updateHighestScore(self.answered, "basic")
+                    self.media.updateHighestScore(self.answered, "basic")
 
             # Green-bar
             cv2.rectangle(img, (40, 400), (600, 430), (0, 255, 0), 3)
